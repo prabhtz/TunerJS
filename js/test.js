@@ -108,19 +108,7 @@ function Analyser() {
 			}
 		}
 				
-		// btn.onclick = function() {
-		// 	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-		// 	if (navigator.getUserMedia) {
-		// 		navigator.getUserMedia({audio: "true"}, function(stream) {
-
-		// 			that.input = that.audioContext.createMediaStreamSource(stream);
-		// 			that.input.connect(that.scriptNode);
-		// 		}, function() {});
-		// 	}
-		// }
-
-
-
+		// For test
 		// audioElement.addEventListener(("canplay"), function() {
 			
 		// 	that.input = that.audioContext.createMediaElementSource(audio);
@@ -144,10 +132,6 @@ function Analyser() {
 		var fftResult = this.computeFrequency();
 
 		views.updateView(corrResult, fftResult);
-
-		// for (var i=0; i<this.fft.result.length; i++) {	
-		// 	this.fft.result[i] *= this.response(i);
-		// }
 		
 	}
 
@@ -257,19 +241,9 @@ function FT(bufSize, sampleRate) {
 					bestoffset = offset;
 			
 				}
-				// } else if (flag) {
-				// 	var shift = (correlations[bestoffset + 1] - correlations[bestoffset - 1])/correlations[bestoffset];
-				// 	console.log(sampleRate/(bestoffset + (8*shift)));
-				// 	return sampleRate/(bestoffset + (8*shift));
-				// }
 			}
 
 			lastcorrelation = correlation;
-
-			// if (bestcorrelation > 1.3) {
-			// 	break;
-			// }
-
 		}
 
 		if (bestcorrelation > 0.1) {
@@ -686,8 +660,6 @@ function Views() {
 					arrow.classList.remove("down");
 					arrow.classList.add("up");
 				} else {
-					
-					// console.log(tuningPatterns.strings[position][1]);
 					arrow.classList.remove("up");
 					arrow.classList.add("down");
 				}
@@ -928,13 +900,5 @@ function Views() {
 		oscillator.stop(playContext.currentTime + 2);
 	}
 }
-
-
-// var analyser = new Analyser();
-// analyser.init();
-// var temp = new GuitarNotes();
-// temp.generateNoteTable();
-// console.log(temp.noteTable);
-// console.log(temp.getFrequency(temp.noteTable.E4));
 
 })();
