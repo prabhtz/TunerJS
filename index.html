@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="layout.css">
+	<link href="https://fonts.googleapis.com/css?family=Muli:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+</head>
+<body>
+<!-- <audio crossOrigin="anonymous" id="audio" src="1.mp3" controls="controls"></audio> -->
+<!-- <audio crossOrigin="anonymous" id="audio" src="a.mp3" controls="controls"></audio> -->
+<!-- <audio crossOrigin="anonymous" id="audio" src="b.mp3" controls="controls"></audio> -->
+<audio crossOrigin="anonymous" id="audio" src="temp.mp3" controls="controls"></audio>
+
+<div class="header-wrapper">
+	<div class="header">
+		TunerJS
+		<div class="svg-wrapper">
+	  		<svg height="60" width="320" xmlns="http://www.w3.org/2000/svg">
+	    	<rect class="shape" height="50" width="320"></rect>
+	  		</svg>
+			<div class="text">START</div>
+		</div>
+	</div>
+</div>
+<div id="barcontainer">
+	<canvas id="canvas" width="960px" height="150px">	
+	</canvas>
+</div>
+
+<div class="middle clrfix">
+	<div class="left clrfix">
+		<svg id="svg" xmlns="http://www.w3.org/2000/svg"
+	    	 xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500">
+	    	<image x="110" y="110" width="280" height="280" xlink:href="circle.png"></image>
+			<defs>
+				<marker id="pointer" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="	strokeWidth">
+				<path d="M0,0 L0,6 L9,3 z" fill="#8d919e"></path>
+				</marker>
+  			</defs>
+
+		</svg>
+
+		<div class="dropdown">
+			<div class="dropdown-button">Select a pattern </div>
+			<span class="triangle">&#9660</span>
+			<ul class="dropdown-selection">
+				<li id="1">Regular (Standard)</li>
+				<li id="2">Irish (DADGAD)</li>
+				<li id="3">Drop D</li>
+				<li id="4">Open D</li>
+				<li id="5">Open G</li>
+				<li id="6">Open A</li>
+				<li id="7">Lute</li>
+			</ul>
+		</div>
+
+		<table class="table">
+		</table>
+	</div>
+
+	<div class="information">
+		<span id="chord">--</span>
+		<span id="frequency">-- Hz</span>
+		<span class="arrow"></span>
+	</div>
+</div>
+<script type="text/javascript" src="js/test.js"></script>
+</body>
+</html>
