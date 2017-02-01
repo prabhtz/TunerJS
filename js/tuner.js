@@ -127,11 +127,12 @@
     }
         
     // For test
-    // audioElement.addEventListener(("canplay"), function() {
-      
-    //  that.input = that.audioContext.createMediaElementSource(audio);
-    //  that.input.connect(that.scriptNode);
-    // });
+    //   audioElement.addEventListener(("canplay"), function() {
+        
+    //    that.input = that.audioContext.createMediaElementSource(audio);
+    //    that.input.connect(that.scriptNode);
+    //   });
+    // }
 
     /**
      * Called by Script Processor Node when a PCM data is acquired.
@@ -672,7 +673,7 @@
     this.updateView = function(corrResult, fftResult) {
       if (corrResult == -1) {
         chordElement.innerHTML = "--";
-        freqElement.innerHTML= "--";
+        freqElement.innerHTML= "0" + "<br/>Hz";
       } else {
 
         if (Math.abs(corrResult - fftResult) > 10) {
@@ -694,7 +695,7 @@
         var notesIndex = value % 12;
         
         chordElement.innerHTML = display;
-        freqElement.innerHTML = this.finalFrequency.toFixed(4) + " Hz";
+        freqElement.innerHTML = this.finalFrequency.toFixed(0) + "<br/>Hz";
 
         calculateRotation(notesIndex);
         this.displayArrow(value, display);
@@ -760,7 +761,6 @@
       }
 
       line.style.transform = "rotate(" + angle + "deg)";
-      line.style.transformOrigin = "50% 50%";
       current = notesArray[index].theta;
       
     }

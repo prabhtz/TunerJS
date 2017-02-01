@@ -6,8 +6,8 @@
 body {
 	margin: 0 auto;
 	background-color: #555B6E;
-	width: 100%;
 	background-size: contain;
+	width: 100%;
 }
 
 .clrfix:before, .clrfix:after { 
@@ -197,13 +197,12 @@ tr:nth-child(even) {
 
 .information {
 	float: right;
-	width: 25%;
-	height: 480px;
+	width: 30%;
 	position: relative;
 }
 
 #chord {
-	width: 80%;
+	width: 100%;
 	display: block;
 	font-size: 100px;
 	text-align: center;
@@ -243,6 +242,9 @@ tr:nth-child(even) {
 
 #line {
 	transition: transform .8s ease;
+	-ms-transform-origin: left;
+	-webkit-transform-origin: left;
+	-moz-transform-origin: center;
 }
 
 #barcontainer {
