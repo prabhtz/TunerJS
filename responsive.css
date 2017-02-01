@@ -1,0 +1,35 @@
+@media only screen and (max-width: 960px) {
+	
+	.svg-container {
+		width: 100%;
+	}
+
+	.center {
+		width: 100%;
+		float: left;
+	}
+
+	.dropdown {
+		margin-left: 20px;
+	}
+}
+
+@media only screen and (max-width: 480px) {
+
+	.left {
+		width: 100%;
+	}
+
+	.information {
+		float: left;
+		width: 100%;
+	}
+}
+
+@media only screen and (max-width: 440px) {
+
+	.svg-wrapper {
+		float: left;
+		width: 100%;
+	}
+}
