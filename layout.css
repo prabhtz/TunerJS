@@ -36,6 +36,9 @@ body {
 	letter-spacing: 2px;
 }
 
+.middle {
+	max-width: 71.875em;
+}
 
 .svg-wrapper {
 	height: 60px;
