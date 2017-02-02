@@ -63,8 +63,8 @@
     analyser = new Analyser();
     guitarNotes = new GuitarNotes();
     views = new Views();
-    guitarNotes.generateNoteTable();
     tuningPatterns = new TuningPatterns();
+    guitarNotes.generateNoteTable();
     views.init();
     analyser.init();
   }
@@ -78,9 +78,11 @@
     this.audioContext = new AudioContext();
     this.inputStream = new Float32Array(this.bufSize);
     this.fft = new FFT(this.bufSize, this.audioContext.sampleRate);
+    this.biquadFilter = new BiquadFilter();
 
     this.scriptNode = this.audioContext.createScriptProcessor(this.bufSize, 1, 1);
 
+    this.biquadFilter.init((100 / this.audioContext.sampleRate), 0.707, 5);
     /**
     * [onaudioprocess]
     * @param  {Event handler input} event 
@@ -149,6 +151,7 @@
       var corrResult = this.fft.calculateCorrelation(this.inputStream);
 
       for (var i=0; i<inputData.length; i++) {
+        this.inputStream[i] = this.biquadFilter.process(this.inputStream[i]);
         this.inputStream[i] = this.inputStream[i] * this.win[i];
       }
 
@@ -194,6 +197,46 @@
      **/
     function getMax(numArray) {
         return Math.max.apply(null, numArray);
+    }
+  }
+
+  function BiquadFilter() {
+    this.a0 = 1.0;
+    this.a1 = 0.0;
+    this.a2 = 0.0;
+    this.b1 = 0.0;
+    this.b2 = 0.0;
+    this.fc;
+    this.q;
+    this.gain;
+    this.z1 = 0.0;
+    this.z2 = 0.0;
+
+    this.process = function(inp) {
+      var out = inp * this.a0 + this.z1;
+      this.z1 = inp * this.a1 + this.z2 - this.b1 * out;
+      this.z2 = inp * this.a2 - this.b2 * out;
+      return out;
+    }
+
+    this.init = function(fc, q, gain) {
+      this.fc = fc;
+      this.q = q;
+      this.gain = gain;
+      this.calculateBiquad();
+    }
+
+    this.calculateBiquad = function() {
+      this.norm;
+      this.v = Math.pow(10, Math.abs(this.gain) / 20.0);
+      this.k = Math.tan(Math.PI * this.fc);
+
+      this.norm = 1 / (1 + Math.sqrt(2) * this.k + this.k * this.k);
+      this.a0 = (1 + Math.sqrt(2 * this.v) * this.k + this.v * this.k * this.k) * this.norm;
+      this.a1 = 2 * (this.v * this.k * this.k - 1) * this.norm;
+      this.a2 = (1 - Math.sqrt(2 * this.v) * this.k + this.v * this.k * this.k) * this.norm;
+      this.b1 = 2 * (this.k * this.k - 1) * this.norm;
+      this.b2 = (1 - Math.sqrt(2) * this.k + this.k * this.k) * this.norm;
     }
   }
 
