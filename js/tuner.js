@@ -155,7 +155,7 @@
       this.fft.process(this.inputStream);
       var fftResult = this.computeFrequency();
 
-      views.updateView(corrResult, fftResult);
+      views.updateView(corrResult, fftResult, this.fft);
     }
 
     /**
@@ -442,7 +442,7 @@
       }
 
       /**
-       * To obtain magnitudes of the computed data.
+       * To obtain magnitudes in dB of the computed data.
        */
       this.calculate();
 
@@ -453,7 +453,7 @@
       /**
        * Calculate the ByteData required for diplaying bar visualization
        */
-      this.calculateByteData(real);
+      // this.calculateByteData(real);
 
       var buff = new Float32Array(bufSize);
 
@@ -670,7 +670,9 @@
      * Both are compared to provide a good approximate.
      * Correlation gives accurate results below 250 Hz, while FFT above 250 Hz.
      */
-    this.updateView = function(corrResult, fftResult) {
+    this.updateView = function(corrResult, fftResult, fftObj) {
+      context.clearRect(0, 0, canvas.width, canvas.height);  
+
       if (corrResult == -1) {
         chordElement.innerHTML = "--";
         freqElement.innerHTML= "0" + "<br/>Hz";
@@ -697,9 +699,9 @@
         chordElement.innerHTML = display;
         freqElement.innerHTML = this.finalFrequency.toFixed(0) + "<br/>Hz";
 
+        fftObj.calculateByteData(fftObj.real);
         calculateRotation(notesIndex);
         this.displayArrow(value, display);
-        
       }
     }
 
@@ -734,9 +736,11 @@
         var guitarnotes = new GuitarNotes();
         guitarnotes.x = 250 + 150 * Math.cos((Math.PI * offset)/180);
         guitarnotes.y = 250 + 150 * Math.sin((Math.PI * offset)/180);
+
         if (guitarnotes.x < 250) {
           guitarnotes.x -= 10;
         }
+
         guitarnotes.calcSlope();
         notesArray.push(guitarnotes);
         text.setAttributeNS(null, "x", guitarnotes.x);
