@@ -39,11 +39,11 @@
   var listen = false;
 
 
- /**
-  * [blackManWindow description]
-  * @param  {Integer} size [Represents the size of window; equal to the fft radix]
-  * @return {Float32Array} [Window of specified size]
-  */
+  /**
+    * [blackManWindow description]
+    * @param  {Integer} size [Represents the size of window; equal to the fft radix]
+    * @return {Float32Array} [Window of specified size]
+    */
   var blackManWindow = function(size) {
     var win = new Float32Array(size);
     for (var i=0; i<win.length; i++) {
@@ -69,9 +69,9 @@
     analyser.init();
   }
 
-/**
- * [Custom analyser to handle input processing and update views]
- */
+  /**
+    * [Custom analyser to handle input processing and update views]
+    */
   function Analyser() {
     var that = this;
     this.bufSize = 2048;
@@ -82,14 +82,18 @@
 
     this.scriptNode = this.audioContext.createScriptProcessor(this.bufSize, 1, 1);
 
-    this.biquadFilter.init((100 / this.audioContext.sampleRate), 0.707, 5);
     /**
-    * [onaudioprocess]
-    * @param  {Event handler input} event 
-    *
-    * Gets the PCM data from the input Channels- 1 in this case
-    * Calls update() to process the obtained array
-    */
+     * Intializes a low shelf filter.
+     * Input parameters are cut-off frequency, quality factor and gain in dB.
+     */
+    this.biquadFilter.init((100 / this.audioContext.sampleRate), 0.707, 5);
+   
+    /**
+      * [onaudioprocess]
+      * @param  {Event handler input} event 
+      * Gets the PCM data from the input Channels- 1 in this case.
+      * Calls update() to process the obtained array.
+      */
     this.scriptNode.onaudioprocess = function(event) {
       var inputData = event.inputBuffer.getChannelData(0);
       that.update(inputData);
@@ -200,6 +204,9 @@
     }
   }
 
+  /**
+   * Describes a second order linear recursive filter.
+   */
   function BiquadFilter() {
     this.a0 = 1.0;
     this.a1 = 0.0;
@@ -226,6 +233,9 @@
       this.calculateBiquad();
     }
 
+    /**
+     * Calculates the coefficients of the low shelf filter.
+     */
     this.calculateBiquad = function() {
       this.norm;
       this.v = Math.pow(10, Math.abs(this.gain) / 20.0);
@@ -258,7 +268,7 @@
     this.peak = 0;
 
     /**
-     * Analyses the FFT output in real, computes the magnitude and stores in result  .
+     * Analyses the FFT output in real, computes the magnitude and stores in result.
      */
     this.calculate = function() {
       var result = this.result;

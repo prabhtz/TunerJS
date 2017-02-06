@@ -52,6 +52,7 @@ body {
 	width: 320px;
 	cursor: pointer;
 	color: #f5f5f5;
+	padding-right: 15px;
 }
 
 .shape {
