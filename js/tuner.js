@@ -311,7 +311,6 @@
       var bestcorrelation = 0;
       var bestoffset = -1;
       var lastcorrelation = 1;
-      var flag = false;
       var correlations = new Array(maxsamples);
 
       for (var i=0; i<size; i++) {
@@ -337,7 +336,6 @@
 
         correlations[offset] = correlation;
         if (correlation > 0.9 && correlation > lastcorrelation) {
-          flag = true;
           if (correlation > bestcorrelation) {
             bestcorrelation = correlation;
             bestoffset = offset;
@@ -415,15 +413,15 @@
       //check if k buffersize is a power of 2
       
       var halfSize = 1,
-        phaseShiftStepReal,
-        phaseShiftStepImag,
-        currentPhaseShiftReal,
-        currentPhaseShiftImag,
-        off,
-        tr,
-        ti,
-        tmpReal,
-        i;
+      phaseShiftStepReal,
+      phaseShiftStepImag,
+      currentPhaseShiftReal,
+      currentPhaseShiftImag,
+      off,
+      tr,
+      ti,
+      tmpReal,
+      i;
 
       for (var i=0; i<bufSize; i++) {
         real[i] = buffer[bitReverse[i]];
@@ -494,20 +492,15 @@
         previous[i] = real[i];
       }
 
+      this.calculate();
+
       /**
        * To obtain magnitudes in dB of the computed data.
        */
-      this.calculate();
-
       for (var i=0; i<real.length; i++) {
         real[i] = 20 * Math.log10(real[i]);
       }
-
-      /**
-       * Calculate the ByteData required for diplaying bar visualization
-       */
-      // this.calculateByteData(real);
-
+      
       var buff = new Float32Array(bufSize);
 
       //for calculating ifft
